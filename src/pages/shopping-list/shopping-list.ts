@@ -1,6 +1,6 @@
 import { NgForm } from '@angular/forms';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, PopoverController, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, ModalController, PopoverController, LoadingController, AlertController } from 'ionic-angular';
 
 import { ShoppingListService } from './../../services/shopping-list.service';
 import { Ingredient } from '../../models/ingredient';
@@ -18,9 +18,7 @@ export class ShoppingListPage {
   listItems: Ingredient[];
   ingredient: Ingredient;
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private shoppingService: ShoppingListService,
+  constructor(private shoppingService: ShoppingListService,
               private modalCtrl: ModalController,
               private popoverCtrl: PopoverController,
               private authService: AuthService,
@@ -36,11 +34,6 @@ export class ShoppingListPage {
     this.loadItems();
   }
 
-  /*ionViewDidLoad() {
-    this.loadItems();
-  }
-    */
-
   onAddItem(form: NgForm){
     this.shoppingService.addItem(form.value.ingredientName, form.value.amount);
     form.reset();
@@ -49,7 +42,11 @@ export class ShoppingListPage {
 
   onViewItem(item: Ingredient, index: number){
     const modal = this.modalCtrl.create(EditListPage, { itemName: item.name, itemAmount: item.amount, indexNumber: index});
+    modal.onDidDismiss(() => {
+       this.loadItems();
+     })
     modal.present();
+
   }
 
   deleteItem(index: number){

@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, ViewController, NavParams, App } from 'ionic-angular';
+import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 
 import { ShoppingListService } from '../../services/shopping-list.service';
-import { ShoppingListPage } from './../shopping-list/shopping-list';
-
-
 
 @IonicPage()
 @Component({
@@ -19,19 +16,18 @@ export class EditListPage {
 
   constructor(private viewCtrl: ViewController,
               private navParams: NavParams,
-              private appCtrl: App,
               private shoppingService: ShoppingListService) {
   }
 
   private onExit() {
     this.viewCtrl.dismiss();
-    this.appCtrl.getRootNav().push(ShoppingListPage);
   }
 
   ionViewDidLoad() {
     this.itemEdit = this.navParams.get('itemName');
     this.itemAmountEdit = this.navParams.get('itemAmount');
     this.itemIndex = this.navParams.get('indexNumber');
+    console.log(this.itemEdit, this.itemAmountEdit, this.itemIndex);
   }
 
   onUpdateItem(form: NgForm) {

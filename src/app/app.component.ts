@@ -9,6 +9,7 @@ import { SigninPage } from './../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
 
 import { AuthService } from './../services/auth.service';
+import { apiKey } from '../autho';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,6 +19,8 @@ export class MyApp {
   signinPage = SigninPage;
   signupPage = SignupPage;
   isAuthenticated = false;
+  myKey: string;
+
   @ViewChild('nav') nav: NavController;
 
   constructor(platform: Platform,
@@ -25,8 +28,9 @@ export class MyApp {
               splashScreen: SplashScreen,
               private menuCtrl: MenuController,
               private authService: AuthService) {
+    var myKey = apiKey;
     firebase.initializeApp({
-      apiKey: "AIzaSyBxxattQeWOSTmYLznK7l6viLHJ6x_wCzo",
+      apiKey: myKey,
       authDomain: "ionic-recipebook-b6b0e.firebaseapp.com"
     });
     firebase.auth().onAuthStateChanged(user => {
